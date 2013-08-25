@@ -57,7 +57,7 @@ public class ColorLayoutImpl {
 
     protected static int[] availableCoeffNumbers = {1, 3, 6, 10, 15, 21, 28, 64};
 
-    protected int numCCoeff = 6, numYCoeff = 21;
+    protected int numCCoeff = 28, numYCoeff = 64;
 
     public int[] YCoeff = new int[numYCoeff];
     public int[] CbCoeff = new int[numCCoeff];

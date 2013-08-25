@@ -93,14 +93,23 @@ img {
 		</style>
 		<script type="text/javascript">
 $(function() {
-	$("body").on("click", "img", function() {
-		$(this).closest(".imageblock").toggleClass("original");
-	});
+	$("body")
+		.on("click", "img", function() {
+			$(this).closest(".imageblock").toggleClass("original");
+		});
+	$(document)
+		.on("keypress", function(e) {
+			switch (e.keyCode) {
+			case 114: // 'r'
+				location.href = location.href;
+				break;
+			}
+		});
 });
 		</script>
 	</head>
-	<body>
-		<div style="position: absolute; z-index: 1; background-color: white; padding: 2px 1em;"><a href=".">Reload</a></div>
+	<body style="overflow-x: scroll; margin: 0px;">
+		<div style="position: fixed; z-index: 1; background-color: white; padding: 2px 1em;"><a href=".">Reload</a></div>
 		<div style="height: 5px;"></div>
 		<% { PictureInfoWithScore pic = outpic; %>
 		<div class="imageblock">

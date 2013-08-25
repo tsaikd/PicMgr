@@ -8,9 +8,12 @@
 	</parent>
 	<artifactId>PicMgr</artifactId>
 	<packaging>jar</packaging>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.2</version>
 	<name>PicMgr</name>
 	<url>http://www.tsaikd.org</url>
+	<properties>
+		<mainClass>org.tsaikd.java.picmgr.PictureManager</mainClass>
+	</properties>
 	<dependencies>
 		<dependency>
 			<groupId>org.tsaikd.java</groupId>
@@ -35,31 +38,5 @@
 	</dependencies>
 	<build>
 		<finalName>${project.artifactId}-${project.version}-${maven.build.timestamp}</finalName>
-		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-assembly-plugin</artifactId>
-				<executions>
-					<execution>
-						<phase>package</phase>
-						<goals>
-							<goal>attached</goal>
-						</goals>
-						<configuration>
-							<archive>
-								<manifest>
-									<mainClass>org.tsaikd.java.picmgr.PictureManager</mainClass>
-								</manifest>
-							</archive>
-							<finalName>${project.artifactId}-${project.version}-${maven.build.timestamp}</finalName>
-							<appendAssemblyId>false</appendAssemblyId>
-							<descriptorRefs>
-								<descriptorRef>jar-with-dependencies</descriptorRef>
-							</descriptorRefs>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
-		</plugins>
 	</build>
 </project>
