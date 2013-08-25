@@ -1,16 +1,16 @@
-<%@page import="org.tsaikd.java.picmgr.PictureInfoWithScore"%>
-<%@page import="org.tsaikd.java.picmgr.WebUtils"%>
-<%@page import="org.apache.commons.io.FileUtils"%>
-<%@page import="org.apache.commons.codec.binary.Base64"%>
-<%@page import="org.tsaikd.java.picmgr.PictureManager"%>
 <%@page import="java.nio.file.Paths"%>
 <%@page import="java.nio.file.Path"%>
 <%@page import="java.util.List"%>
-<%@page import="org.apache.solr.client.solrj.response.QueryResponse"%>
 <%@page import="java.util.Random"%>
+<%@page import="org.apache.commons.codec.binary.Base64"%>
+<%@page import="org.apache.commons.io.FileUtils"%>
+<%@page import="org.apache.solr.client.solrj.impl.HttpSolrServer"%>
+<%@page import="org.apache.solr.client.solrj.response.QueryResponse"%>
 <%@page import="org.apache.solr.client.solrj.SolrQuery.ORDER"%>
 <%@page import="org.apache.solr.client.solrj.SolrQuery"%>
-<%@page import="org.apache.solr.client.solrj.impl.HttpSolrServer"%>
+<%@page import="org.tsaikd.java.picmgr.PictureInfoWithScore"%>
+<%@page import="org.tsaikd.java.picmgr.PictureManager"%>
+<%@page import="org.tsaikd.java.picmgr.WebUtils"%>
 <%
 SolrQuery query = new SolrQuery("*:*")
 	.setRows(10)
@@ -93,6 +93,31 @@ img {
 		</style>
 		<script type="text/javascript">
 $(function() {
+
+	function commaNum(num) {
+		if (!num) {
+			return "0";
+		}
+		console.assert($.isNumeric(num));
+		num = "" + num;
+		if (num.length <= 3) {
+			return num;
+		}
+		var start = 0;
+		var end = num.length % 3;
+		if (end < 1) {
+			end = 3;
+		}
+		var res = num.substring(start, end);
+		while (end < num.length) {
+			start = end;
+			end += 3;
+			res += ",";
+			res += num.substring(start, end);
+		}
+		return res;
+	};
+
 	$("body")
 		.on("click", "img", function() {
 			$(this).closest(".imageblock").toggleClass("original");
@@ -105,6 +130,12 @@ $(function() {
 				break;
 			}
 		});
+
+	$(".fileSize").each(function() {
+		var num = $(this).text();
+		var text = commaNum(num);
+		$(this).text(text);
+	});
 });
 		</script>
 	</head>
@@ -121,7 +152,7 @@ $(function() {
 				</span>
 				<span class="imageattr">
 					<span>fileSize</span>
-					<span><%=pic.fileSize%></span>
+					<span class="fileSize"><%=pic.fileSize%></span>
 				</span>
 				<span class="imageattr">
 					<span>fileType</span>
@@ -141,7 +172,7 @@ $(function() {
 				</span>
 				<span class="imageattr">
 					<span>fileSize</span>
-					<span><%=pic.fileSize%></span>
+					<span class="fileSize"><%=pic.fileSize%></span>
 				</span>
 				<span class="imageattr">
 					<span>fileType</span>
